@@ -18,7 +18,6 @@ public class Board {
         for(Tile t: tiles){
             this.tiles[t.position().i][t.position().j] = t; 
         }
-        //TODO
     }
     
     // Rozměr hrací desky
@@ -28,22 +27,44 @@ public class Board {
     
     // Vrací dlaždici na zvolené pozici. Pokud je pozice mimo desku, vyhazuje IllegalArgumentException
     public Tile tileAt(TilePosition position){
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        if((position.i < 0 || position.i > this.dimension) && (position.j < 0 || position.j > this.dimension))
+            throw new IllegalArgumentException();
+
+        for(int i = 0; i < dimension; i++){
+            for(Tile t: tiles[i]){
+                if(t.position().equalsTo(position.i,position.j)) return t;
+            }
+        }
+        return null;
     }
     
     // Ověřuje, že pozice se nachází na hrací desce
     public boolean contains(TilePosition... positions){
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(TilePosition p: positions){
+            try{
+                if(tileAt(p) == null) return false;
+            }catch(IllegalArgumentException e){
+                return false;
+            }
+        }
+        return true;
     }
     
     // Vytváří novou hrací desku s novými dlaždicemi z pole tiles. Všechny ostatní dlaždice zůstávají stejné
     public Board withTiles(Tile... tiles){
-        
-        Board tmp = new Board(this.dimension,tiles);
+
+        Board tmp = new Board(dimension);
+
         for(int i = 0; i < dimension; i++){
-            
+            tmp.tiles[i] = this.tiles[i].clone();
         }
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(Tile t: tiles){
+            tmp.tiles[t.position().i][t.position().j] = t;
+        }
+
+        return tmp;
+
     }
     
 }
