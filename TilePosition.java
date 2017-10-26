@@ -34,6 +34,14 @@ public class TilePosition {
 		return step(step.x, step.y);
 	}
 
+	public TilePosition stepByPlayingSide(Offset2D dir, PlayingSide side) {
+  	if(side == PlayingSide.BLUE) {
+  		return step(dir);
+  	}
+  	
+  	return step(dir.yFlipped());
+  }
+	
 	public boolean isNextTo(TilePosition pos) {
 		if(this.i == pos.i && Math.abs(this.j - pos.j) == 1)
 			return true;
