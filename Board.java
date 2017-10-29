@@ -90,7 +90,7 @@ public class Board {
 
     // Může zadaná jednotka zajmout na pozici target soupeřovu jednotku?
     public boolean canCaptureOn(Troop troop, TilePosition target) {
-
+        return tileAt(target).hasTroop();
     }
 
     /*
@@ -108,7 +108,8 @@ public class Board {
      */
 
     public boolean canCaptureOnly(TilePosition origin, TilePosition target) {
-
+        Troop attacker = tileAt(origin).troop();
+        return canPlaceTo(attacker,origin) && tileAt(target).hasTroop();
     }
 
     /*
@@ -116,6 +117,7 @@ public class Board {
      * a zajmout tam soupeřovu jednotku?
      */
     public boolean canStepAndCapture(TilePosition origin, TilePosition target) {
+        return tileAt(origin).hasTroop() && tileAt(target).hasTroop();
     }
 
     /*
@@ -124,6 +126,10 @@ public class Board {
      */
     public Board stepOnly(TilePosition origin, TilePosition target) {
 
+        Troop attacker = tileAt(origin).troop();
+        return withTiles(
+                new TroopTile(target,attacker.flipped()),
+                new EmptyTile(origin));
     }
 
     /*
@@ -146,6 +152,10 @@ public class Board {
      * a zajme soupeřovu jednotku na pozici target.
      */
     public Board captureOnly(TilePosition origin, TilePosition target) {
-
+        Troop targetTroop = tileAt(target).troop();
+        return withCaptureAndTiles(
+                targetTroop.info(),
+                targetTroop.side(),
+                new EmptyTile(target));
     }
 }
