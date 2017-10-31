@@ -37,14 +37,14 @@ public class Board {
                 if (t.position().equalsTo(position.i, position.j)) return t;
             }
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     // Ověřuje, že pozice se nachází na hrací desce
     public boolean contains(TilePosition... positions) {
         for (TilePosition p : positions) {
             try {
-                if (tileAt(p) == null) return false;
+                tileAt(p);
             } catch (IllegalArgumentException e) {
                 return false;
             }
@@ -65,18 +65,23 @@ public class Board {
 
     }
 
+    // Vrací zajaté jednotky
+    public CapturedTroops captured(){
+        return this.captured;
+    }
     public Board withCaptureAndTiles(TroopInfo info, PlayingSide side, Tile... tiles) {
-        Board newBoard = new Board(dimension);
+        Board newBoard = this.withTiles(tiles);
         CapturedTroops newCaptured = new CapturedTroops();
-        newCaptured.withTroop(side, info);
-        newBoard.captured = newCaptured;
-        newBoard.withTiles(tiles);
+        newBoard.captured = newCaptured.withTroop(side, info);
         return newBoard;
     }
 
     // Stojí na pozici origin jednotka?
     public boolean canTakeFrom(TilePosition origin) {
-        return tileAt(origin).hasTroop();
+        if(contains(origin)){
+            return tileAt(origin).hasTroop();
+        }
+        return false;
     }
 
     /*
@@ -85,21 +90,30 @@ public class Board {
      * sem jednotka může vstoupit pokud ji hráč bere ze zásobníku.
      */
     public boolean canPlaceTo(Troop troop, TilePosition target) {
+        if(contains(target)){
             return tileAt(target).acceptsTroop(troop);
+        }
+        return false;
     }
 
     // Může zadaná jednotka zajmout na pozici target soupeřovu jednotku?
     public boolean canCaptureOn(Troop troop, TilePosition target) {
-        return tileAt(target).hasTroop();
+        if(contains(target)){
+            return tileAt(target).hasTroop();
+        }
+        return false;
     }
-
     /*
      * Stojí na políčku origin jednotka, která může udělat krok na pozici target
      * bez toho, aby tam zajala soupeřovu jednotku?
      */
     public boolean canStepOnly(TilePosition origin, TilePosition target) {
-        Troop troop = tileAt(origin).troop();
-        return (canTakeFrom(origin) && canPlaceTo(troop,target));
+        if(contains(origin,target)){
+            if(!tileAt(origin).hasTroop()) return false;
+            Troop troop = tileAt(origin).troop();
+            return (canTakeFrom(origin) && canPlaceTo(troop,target));
+        }
+        return false;
     }
 
     /*
@@ -108,8 +122,12 @@ public class Board {
      */
 
     public boolean canCaptureOnly(TilePosition origin, TilePosition target) {
-        Troop attacker = tileAt(origin).troop();
-        return canPlaceTo(attacker,origin) && tileAt(target).hasTroop();
+        if(contains(origin,target)){
+            if(!tileAt(origin).hasTroop()) return false;
+            Troop attacker = tileAt(origin).troop();
+            return tileAt(target).hasTroop();
+        }
+        return false;
     }
 
     /*
@@ -117,7 +135,10 @@ public class Board {
      * a zajmout tam soupeřovu jednotku?
      */
     public boolean canStepAndCapture(TilePosition origin, TilePosition target) {
-        return tileAt(origin).hasTroop() && tileAt(target).hasTroop();
+        if(contains(origin,target)){
+            return tileAt(origin).hasTroop() && tileAt(target).hasTroop();
+        }
+        return false;
     }
 
     /*
@@ -153,9 +174,11 @@ public class Board {
      */
     public Board captureOnly(TilePosition origin, TilePosition target) {
         Troop targetTroop = tileAt(target).troop();
+        Troop attacker = tileAt(origin).troop();
         return withCaptureAndTiles(
                 targetTroop.info(),
                 targetTroop.side(),
+                new TroopTile(origin,attacker.flipped()),
                 new EmptyTile(target));
     }
 }

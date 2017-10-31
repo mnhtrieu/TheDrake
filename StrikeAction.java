@@ -1,5 +1,6 @@
 package kapka.thedrake;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StrikeAction implements TroopAction{
@@ -18,7 +19,14 @@ public class StrikeAction implements TroopAction{
     
     @Override
     public List<BoardChange> changesFrom(TilePosition origin, PlayingSide side, Board board) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        List<BoardChange> result = new ArrayList<>();
+        TilePosition target = origin.stepByPlayingSide(direction, side);
+        if(board.canCaptureOnly(origin,target)){
+            result.add(new CaptureOnly(board,origin,target));
+        }
+
+        return result;
     }
     
 }

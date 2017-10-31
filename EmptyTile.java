@@ -15,7 +15,7 @@ public class EmptyTile extends Tile{
     }
     @Override
     public Troop troop() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new IllegalArgumentException();
     }
     
     

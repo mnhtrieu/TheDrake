@@ -1,5 +1,6 @@
 package kapka.thedrake;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,8 +11,8 @@ public class CapturedTroops {
 
     // Konstruktor vytvářející prázdné seznamy
     public CapturedTroops(){
-        capturedOrange = Collections.emptyList();
-        capturedBlue = Collections.emptyList();
+        capturedOrange = new ArrayList<>();
+        capturedBlue = new ArrayList<>();
     }
 
     // Vrací seznam zajatých jednotek pro daného hráče
@@ -23,15 +24,13 @@ public class CapturedTroops {
     // Přidává nově zajatou jednotku na začátek seznamu zajatých jednotek daného hráče.
     public CapturedTroops withTroop(PlayingSide side, TroopInfo info){
         CapturedTroops tmp = new CapturedTroops();
-        if(side == PlayingSide.BLUE){
-            //Collections.copy(tmp.capturedBlue,this.capturedBlue);
+        if(side == PlayingSide.BLUE)
             tmp.capturedBlue.add(info);
-            tmp.capturedBlue.addAll(this.capturedBlue);
-        }
-        else{
+        else
             tmp.capturedOrange.add(info);
-            tmp.capturedOrange.addAll(this.capturedBlue);
-        }
+
+        tmp.capturedBlue.addAll(this.capturedBlue);
+        tmp.capturedOrange.addAll(this.capturedOrange);
         return tmp;
     }
 }
