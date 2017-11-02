@@ -1,14 +1,34 @@
 package kapka.thedrake;
 
-public class Board {
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public class Board implements Iterable<Tile> {
 
     private final int dimension;
     private final Tile[][] tiles;
     private CapturedTroops captured;
 
+    
+    // Primární konstruktor
+    public Board(int dimension, CapturedTroops captured, Tile... tiles){
+        this.dimension = dimension;
+        this.captured = captured;
+        this.tiles = new Tile[dimension][dimension];
+        for (int i = 0; i < dimension; i++)
+            for (int j = 0; j < dimension; j++)
+                this.tiles[i][j] = new EmptyTile(new TilePosition(i, j));
+
+        for (Tile t : tiles) {
+            this.tiles[t.position().i][t.position().j] = t;
+        }
+    }
+    
     // Konstruktor. Vytvoří čtvercovou hrací desku zadaného rozměru se specefikovanými dlaždicemi.
     // Všechny ostatní dlažice se berou jako prázdné.
     public Board(int dimension, Tile... tiles) {
+        /*
         this.dimension = dimension;
         this.tiles = new Tile[dimension][dimension];
         for (int i = 0; i < dimension; i++)
@@ -18,6 +38,8 @@ public class Board {
         for (Tile t : tiles) {
             this.tiles[t.position().i][t.position().j] = t;
         }
+        */
+        this(dimension, null, tiles);
     }
 
 
@@ -180,5 +202,21 @@ public class Board {
                 targetTroop.side(),
                 new TroopTile(origin,attacker.flipped()),
                 new EmptyTile(target));
+    }
+
+    @Override
+    public void forEach(Consumer<? super Tile> action) {
+        Iterable.super.forEach(action); //To change body of generated methods, choose Tools | Templates.
+        //TODO
+    }
+
+    @Override
+    public Iterator<Tile> iterator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Spliterator<Tile> spliterator() {
+        return Iterable.super.spliterator(); //To change body of generated methods, choose Tools | Templates.
     }
 }

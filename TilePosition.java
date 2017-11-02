@@ -1,6 +1,7 @@
 package kapka.thedrake;
 
 public class TilePosition {
+
     public final int i;
     public final int j;
 
@@ -72,4 +73,32 @@ public class TilePosition {
     public String toString() {
         return String.format("%c%d", column(), row());
     }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + this.i;
+        hash = 67 * hash + this.j;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TilePosition)) {
+            return false;
+        }
+        final TilePosition other = (TilePosition) obj;
+        if (!other.equalsTo(i, j)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
 }
