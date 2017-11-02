@@ -8,6 +8,6 @@ public class StepAndCapture extends BoardChange {
 
     @Override
     public Board resultBoard() {
-        return initialBoard.stepAndCapture(origin,target);
+        return initialBoard.stepAndCapture(origin, target);
     }
 }

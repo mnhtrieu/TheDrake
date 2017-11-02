@@ -21,8 +21,9 @@ public class SlideAction implements TroopAction {
             target = target.stepByPlayingSide(direction, side);
         }
 
-        if (board.canStepAndCapture(origin, target))
+        if (board.canStepAndCapture(origin, target)) {
             result.add(new StepAndCapture(board, origin, target));
+        }
 
         return result;
     }

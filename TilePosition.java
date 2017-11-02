@@ -44,11 +44,13 @@ public class TilePosition {
     }
 
     public boolean isNextTo(TilePosition pos) {
-        if (this.i == pos.i && Math.abs(this.j - pos.j) == 1)
+        if (this.i == pos.i && Math.abs(this.j - pos.j) == 1) {
             return true;
+        }
 
-        if (this.j == pos.j && Math.abs(this.i - pos.i) == 1)
+        if (this.j == pos.j && Math.abs(this.i - pos.i) == 1) {
             return true;
+        }
 
         return false;
     }
@@ -73,7 +75,7 @@ public class TilePosition {
     public String toString() {
         return String.format("%c%d", column(), row());
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -97,8 +99,8 @@ public class TilePosition {
         if (!other.equalsTo(i, j)) {
             return false;
         }
-        
+
         return true;
     }
-    
+
 }

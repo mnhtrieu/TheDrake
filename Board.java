@@ -10,21 +10,22 @@ public class Board implements Iterable<Tile> {
     private final Tile[][] tiles;
     private CapturedTroops captured;
 
-    
     // Primární konstruktor
-    public Board(int dimension, CapturedTroops captured, Tile... tiles){
+    public Board(int dimension, CapturedTroops captured, Tile... tiles) {
         this.dimension = dimension;
         this.captured = captured;
         this.tiles = new Tile[dimension][dimension];
-        for (int i = 0; i < dimension; i++)
-            for (int j = 0; j < dimension; j++)
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 this.tiles[i][j] = new EmptyTile(new TilePosition(i, j));
+            }
+        }
 
         for (Tile t : tiles) {
             this.tiles[t.position().i][t.position().j] = t;
         }
     }
-    
+
     // Konstruktor. Vytvoří čtvercovou hrací desku zadaného rozměru se specefikovanými dlaždicemi.
     // Všechny ostatní dlažice se berou jako prázdné.
     public Board(int dimension, Tile... tiles) {
@@ -38,10 +39,9 @@ public class Board implements Iterable<Tile> {
         for (Tile t : tiles) {
             this.tiles[t.position().i][t.position().j] = t;
         }
-        */
+         */
         this(dimension, null, tiles);
     }
-
 
     // Rozměr hrací desky
     public int dimension() {
@@ -51,12 +51,15 @@ public class Board implements Iterable<Tile> {
     // Vrací dlaždici na zvolené pozici. Pokud je pozice mimo desku, vyhazuje IllegalArgumentException
     public Tile tileAt(TilePosition position) {
 
-        if ((position.i < 0 || position.i > this.dimension) && (position.j < 0 || position.j > this.dimension))
+        if ((position.i < 0 || position.i > this.dimension) && (position.j < 0 || position.j > this.dimension)) {
             throw new IllegalArgumentException();
+        }
 
         for (int i = 0; i < dimension; i++) {
             for (Tile t : tiles[i]) {
-                if (t.position().equalsTo(position.i, position.j)) return t;
+                if (t.position().equalsTo(position.i, position.j)) {
+                    return t;
+                }
             }
         }
         throw new IllegalArgumentException();
@@ -88,9 +91,10 @@ public class Board implements Iterable<Tile> {
     }
 
     // Vrací zajaté jednotky
-    public CapturedTroops captured(){
+    public CapturedTroops captured() {
         return this.captured;
     }
+
     public Board withCaptureAndTiles(TroopInfo info, PlayingSide side, Tile... tiles) {
         Board newBoard = this.withTiles(tiles);
         CapturedTroops newCaptured = new CapturedTroops();
@@ -100,7 +104,7 @@ public class Board implements Iterable<Tile> {
 
     // Stojí na pozici origin jednotka?
     public boolean canTakeFrom(TilePosition origin) {
-        if(contains(origin)){
+        if (contains(origin)) {
             return tileAt(origin).hasTroop();
         }
         return false;
@@ -112,7 +116,7 @@ public class Board implements Iterable<Tile> {
      * sem jednotka může vstoupit pokud ji hráč bere ze zásobníku.
      */
     public boolean canPlaceTo(Troop troop, TilePosition target) {
-        if(contains(target)){
+        if (contains(target)) {
             return tileAt(target).acceptsTroop(troop);
         }
         return false;
@@ -120,20 +124,23 @@ public class Board implements Iterable<Tile> {
 
     // Může zadaná jednotka zajmout na pozici target soupeřovu jednotku?
     public boolean canCaptureOn(Troop troop, TilePosition target) {
-        if(contains(target)){
+        if (contains(target)) {
             return tileAt(target).hasTroop();
         }
         return false;
     }
+
     /*
      * Stojí na políčku origin jednotka, která může udělat krok na pozici target
      * bez toho, aby tam zajala soupeřovu jednotku?
      */
     public boolean canStepOnly(TilePosition origin, TilePosition target) {
-        if(contains(origin,target)){
-            if(!tileAt(origin).hasTroop()) return false;
+        if (contains(origin, target)) {
+            if (!tileAt(origin).hasTroop()) {
+                return false;
+            }
             Troop troop = tileAt(origin).troop();
-            return (canTakeFrom(origin) && canPlaceTo(troop,target));
+            return (canTakeFrom(origin) && canPlaceTo(troop, target));
         }
         return false;
     }
@@ -142,10 +149,11 @@ public class Board implements Iterable<Tile> {
      * Stojí na políčku origin jednotka, která může zůstat na pozici origin
      * a zajmout soupeřovu jednotku na pozici target?
      */
-
     public boolean canCaptureOnly(TilePosition origin, TilePosition target) {
-        if(contains(origin,target)){
-            if(!tileAt(origin).hasTroop()) return false;
+        if (contains(origin, target)) {
+            if (!tileAt(origin).hasTroop()) {
+                return false;
+            }
             Troop attacker = tileAt(origin).troop();
             return tileAt(target).hasTroop();
         }
@@ -157,7 +165,7 @@ public class Board implements Iterable<Tile> {
      * a zajmout tam soupeřovu jednotku?
      */
     public boolean canStepAndCapture(TilePosition origin, TilePosition target) {
-        if(contains(origin,target)){
+        if (contains(origin, target)) {
             return tileAt(origin).hasTroop() && tileAt(target).hasTroop();
         }
         return false;
@@ -171,7 +179,7 @@ public class Board implements Iterable<Tile> {
 
         Troop attacker = tileAt(origin).troop();
         return withTiles(
-                new TroopTile(target,attacker.flipped()),
+                new TroopTile(target, attacker.flipped()),
                 new EmptyTile(origin));
     }
 
@@ -200,23 +208,31 @@ public class Board implements Iterable<Tile> {
         return withCaptureAndTiles(
                 targetTroop.info(),
                 targetTroop.side(),
-                new TroopTile(origin,attacker.flipped()),
+                new TroopTile(origin, attacker.flipped()),
                 new EmptyTile(target));
     }
 
-    @Override
-    public void forEach(Consumer<? super Tile> action) {
-        Iterable.super.forEach(action); //To change body of generated methods, choose Tools | Templates.
-        //TODO
-    }
+   
 
     @Override
     public Iterator<Tile> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Iterator<Tile>(){
+            private int i = 0;
+            private int j = 0;
+            @Override
+            public boolean hasNext() {
+                return i < dimension-1 && j < dimension-1;
+            }
+
+            @Override
+            public Tile next() {
+                if(j != 0 && j++ % (dimension-1) == 0) i++;
+                    return tileAt(new TilePosition(i,j%(dimension-1)));
+            }
+            
+            
+        };
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Spliterator<Tile> spliterator() {
-        return Iterable.super.spliterator(); //To change body of generated methods, choose Tools | Templates.
-    }
 }

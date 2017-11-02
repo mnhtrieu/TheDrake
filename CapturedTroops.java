@@ -10,24 +10,27 @@ public class CapturedTroops {
     private List<TroopInfo> capturedBlue;
 
     // Konstruktor vytvářející prázdné seznamy
-    public CapturedTroops(){
+    public CapturedTroops() {
         capturedOrange = new ArrayList<>();
         capturedBlue = new ArrayList<>();
     }
 
     // Vrací seznam zajatých jednotek pro daného hráče
-    public List<TroopInfo> troops(PlayingSide side){
-        if(side == PlayingSide.BLUE) return Collections.unmodifiableList(capturedBlue);
+    public List<TroopInfo> troops(PlayingSide side) {
+        if (side == PlayingSide.BLUE) {
+            return Collections.unmodifiableList(capturedBlue);
+        }
         return Collections.unmodifiableList(capturedOrange);
     }
 
     // Přidává nově zajatou jednotku na začátek seznamu zajatých jednotek daného hráče.
-    public CapturedTroops withTroop(PlayingSide side, TroopInfo info){
+    public CapturedTroops withTroop(PlayingSide side, TroopInfo info) {
         CapturedTroops tmp = new CapturedTroops();
-        if(side == PlayingSide.BLUE)
+        if (side == PlayingSide.BLUE) {
             tmp.capturedBlue.add(info);
-        else
+        } else {
             tmp.capturedOrange.add(info);
+        }
 
         tmp.capturedBlue.addAll(this.capturedBlue);
         tmp.capturedOrange.addAll(this.capturedOrange);

@@ -3,98 +3,108 @@ package kapka.thedrake;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StandardDrakeSetup implements TheDrakeSetup {
-	
+
+    private Map<String, TroopInfo> hMap;
+
+    public StandardDrakeSetup() {
+        hMap = new HashMap<String, TroopInfo>();
+        hMap.put("Drake", DRAKE);
+        hMap.put("Clubman", CLUBMAN);
+        hMap.put("Monk", MONK);
+        hMap.put("Spearman", SPEARMAN);
+        hMap.put("Swordsman", SWORDSMAN);
+        hMap.put("Archer", ARCHER);
+
+    }
+
     @Override
     public List<TroopInfo> troops() {
-            return Arrays.asList(DRAKE, CLUBMAN, MONK, SPEARMAN, SWORDSMAN, ARCHER);
+        return Arrays.asList(DRAKE, CLUBMAN, MONK, SPEARMAN, SWORDSMAN, ARCHER);
     }
-
 
     public final TroopInfo DRAKE = new TroopInfo(
-                    "Drake",
-                    Arrays.asList(
-                                    new SlideAction(1, 0),    
-                                    new SlideAction(-1, 0)), 		      
-                    Arrays.asList(
-                                    new SlideAction(0, 1),
-                            new SlideAction(0, -1)));
+            "Drake",
+            Arrays.asList(
+                    new SlideAction(1, 0),
+                    new SlideAction(-1, 0)),
+            Arrays.asList(
+                    new SlideAction(0, 1),
+                    new SlideAction(0, -1)));
 
     public final TroopInfo CLUBMAN = new TroopInfo(
-                    "Clubman",
-                    Arrays.asList(
-                  new ShiftAction(1, 0),    
-                  new ShiftAction(0, 1),
-                  new ShiftAction(-1, 0),
-                  new ShiftAction(0, -1)), 		      
-                    Arrays.asList(
-                            new ShiftAction(1, 1),    
-                  new ShiftAction(-1, 1),
-                  new ShiftAction(1, -1),
-                  new ShiftAction(-1, -1))); 
+            "Clubman",
+            Arrays.asList(
+                    new ShiftAction(1, 0),
+                    new ShiftAction(0, 1),
+                    new ShiftAction(-1, 0),
+                    new ShiftAction(0, -1)),
+            Arrays.asList(
+                    new ShiftAction(1, 1),
+                    new ShiftAction(-1, 1),
+                    new ShiftAction(1, -1),
+                    new ShiftAction(-1, -1)));
 
     public final TroopInfo MONK = new TroopInfo(
-                    "Monk",
-                    Arrays.asList(
-                                    new SlideAction(1, 1),    
-                  new SlideAction(-1, 1),
-                  new SlideAction(1, -1),
-                  new SlideAction(-1, -1)), 		      
-                    Arrays.asList(
-                                    new ShiftAction(1, 0),    
-                  new ShiftAction(0, 1),
-                  new ShiftAction(-1, 0),
-                  new ShiftAction(0, -1)));
+            "Monk",
+            Arrays.asList(
+                    new SlideAction(1, 1),
+                    new SlideAction(-1, 1),
+                    new SlideAction(1, -1),
+                    new SlideAction(-1, -1)),
+            Arrays.asList(
+                    new ShiftAction(1, 0),
+                    new ShiftAction(0, 1),
+                    new ShiftAction(-1, 0),
+                    new ShiftAction(0, -1)));
 
     public final TroopInfo SPEARMAN = new TroopInfo(
-                    "Spearman",
-                    Arrays.asList(
-                                    new ShiftAction(0, 1),
-                                    new StrikeAction(1, 2),    
-                  new StrikeAction(-1, 2)), 		      
-                    Arrays.asList(
-                                    new ShiftAction(1, 1),    
-                  new ShiftAction(-1, 1),
-                  new ShiftAction(0, -1)));
+            "Spearman",
+            Arrays.asList(
+                    new ShiftAction(0, 1),
+                    new StrikeAction(1, 2),
+                    new StrikeAction(-1, 2)),
+            Arrays.asList(
+                    new ShiftAction(1, 1),
+                    new ShiftAction(-1, 1),
+                    new ShiftAction(0, -1)));
 
     public final TroopInfo SWORDSMAN = new TroopInfo(
-                    "Swordsman",
-                    Arrays.asList(
-                                    new StrikeAction(1, 0),    
-                  new StrikeAction(0, 1),
-                  new StrikeAction(-1, 0),
-                  new StrikeAction(0, -1)), 		      
-                    Arrays.asList(
-                                    new ShiftAction(1, 0),    
-                  new ShiftAction(0, 1),
-                  new ShiftAction(-1, 0),
-                  new ShiftAction(0, -1)));
+            "Swordsman",
+            Arrays.asList(
+                    new StrikeAction(1, 0),
+                    new StrikeAction(0, 1),
+                    new StrikeAction(-1, 0),
+                    new StrikeAction(0, -1)),
+            Arrays.asList(
+                    new ShiftAction(1, 0),
+                    new ShiftAction(0, 1),
+                    new ShiftAction(-1, 0),
+                    new ShiftAction(0, -1)));
 
     public final TroopInfo ARCHER = new TroopInfo(
-                    "Archer",
-                    new Offset2D(1, 1), 
-                    new Offset2D(1, 0),
-                    Arrays.asList(
-                                    new ShiftAction(1, 0),    
-                  new ShiftAction(-1, 0),
-                  new ShiftAction(0, -1)), 		      
-                    Arrays.asList(    
-                  new ShiftAction(0, 1),
-                  new StrikeAction(-1, 1),
-                  new StrikeAction(1, 1),
-                  new StrikeAction(0, 2)));
+            "Archer",
+            new Offset2D(1, 1),
+            new Offset2D(1, 0),
+            Arrays.asList(
+                    new ShiftAction(1, 0),
+                    new ShiftAction(-1, 0),
+                    new ShiftAction(0, -1)),
+            Arrays.asList(
+                    new ShiftAction(0, 1),
+                    new StrikeAction(-1, 1),
+                    new StrikeAction(1, 1),
+                    new StrikeAction(0, 2)));
 
-    private static final HashMap<String, TroopInfo> hMap;
-    static{
-        hMap = new HashMap<String, TroopInfo>();
-        //hMap.put("Drake", DRAKE);
-    }
-    
     @Override
     public TroopInfo infoByName(String name) {
-        //TODO hashmap
-        
-        throw new IllegalArgumentException();
+        TroopInfo troop = hMap.get(name);
+        if (troop == null) {
+            throw new IllegalArgumentException();
+        }
+        return troop;
+
     }
 }
