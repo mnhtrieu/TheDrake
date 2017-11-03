@@ -5,7 +5,7 @@ import java.util.List;
 
 public class StrikeAction implements TroopAction {
 
-    private final Offset2D position;
+    //private final Offset2D position;
     private final Offset2D direction;
 
     public StrikeAction(int strikeX, int strikeY) {
@@ -13,7 +13,7 @@ public class StrikeAction implements TroopAction {
     }
 
     public StrikeAction(Offset2D position, Offset2D direction) {
-        this.position = position;
+    //{    this.position = position;
         this.direction = direction;
     }
 

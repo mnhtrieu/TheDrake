@@ -223,16 +223,20 @@ public class Board implements Iterable<Tile> {
             public boolean hasNext() {
                 return i < dimension-1 && j < dimension-1;
             }
-
+            
+            
             @Override
             public Tile next() {
+                //Check  
+                if (!hasNext()) return null;
+                
                 if(j != 0 && j++ % (dimension-1) == 0) i++;
                     return tileAt(new TilePosition(i,j%(dimension-1)));
             }
             
             
         };
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }
