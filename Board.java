@@ -166,7 +166,7 @@ public class Board implements Iterable<Tile> {
      */
     public boolean canStepAndCapture(TilePosition origin, TilePosition target) {
         if (contains(origin, target)) {
-            return tileAt(origin).hasTroop() && tileAt(target).hasTroop();
+            return tileAt(origin).hasTroop() && tileAt(target).hasTroop() && (tileAt(origin).troop().side() != tileAt(target).troop().side());
         }
         return false;
     }

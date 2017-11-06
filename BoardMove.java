@@ -1,6 +1,7 @@
 package kapka.thedrake;
 
 public class BoardMove extends Move {
+
 	private final BoardChange boardChange;
 	
 	public BoardMove(MiddleGameState initialState, BoardChange boardChange) {

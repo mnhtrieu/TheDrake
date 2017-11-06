@@ -1,6 +1,8 @@
 package kapka.thedrake;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Troop {
@@ -23,15 +25,12 @@ public class Troop {
     // Všechny změny desky, které může jednotka provést na desce board, pokud stojí na pozici pos.
     public List<BoardChange> changesFrom(TilePosition pos, Board board) {
         List<BoardChange> actions = new ArrayList<>();
-        StrikeAction strikes = new StrikeAction(pos.i, pos.j);
-        ShiftAction shifts = new ShiftAction(pos.i, pos.j);
-        SlideAction slides = new SlideAction(pos.i, pos.j);
 
-        actions.addAll(strikes.changesFrom(pos, side, board));
-        actions.addAll(shifts.changesFrom(pos, side, board));
-        actions.addAll(slides.changesFrom(pos, side, board));
+        for(TroopAction a: info.actions(face)){
+            actions.addAll(a.changesFrom(pos,side,board));
+        }
 
-        return actions;
+        return Collections.unmodifiableList(actions);
     }
 
     // Info o jednotce

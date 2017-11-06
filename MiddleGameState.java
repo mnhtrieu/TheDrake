@@ -16,10 +16,7 @@ public class MiddleGameState extends BaseGameState {
 				sideOnTurn);
 	}
         
-    /**
-     * Finds all the tiles with the troops of playing side
-     * @return List<Tile>
-     */
+
 	private List<Tile> hasTroop(){
             List<Tile> tileWithTroop = new ArrayList<Tile>();
             for(Tile tile: super.board()){
@@ -39,15 +36,15 @@ public class MiddleGameState extends BaseGameState {
 	@Override
 	public List<Move> allMoves() {
         List<Move> moves = new ArrayList<Move>();
-        List<BoardChange> changes = new ArrayList<>();
+        List<BoardChange> changes;
         moves.addAll(stackMoves());
         for(Tile tile: hasTroop()){
             changes = tile.troop().changesFrom(tile.position(), super.board());
             for(BoardChange change: changes){
+                //System.out.println("adding " + change.getClass().getName() + " - from " + change.origin() + " to " + change.target());
                 moves.add(new BoardMove(this, change));
             }
         }
-
         return Collections.unmodifiableList(moves);
 	}
 	/* Všechny tahy, které může hráč, jenž je zrovna na tahu, provést
