@@ -155,7 +155,7 @@ public class Board implements Iterable<Tile> {
                 return false;
             }
             Troop attacker = tileAt(origin).troop();
-            return tileAt(target).hasTroop();
+            return tileAt(target).hasTroop() && (tileAt(origin).troop().side() != tileAt(target).troop().side());
         }
         return false;
     }
