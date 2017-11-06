@@ -1,10 +1,6 @@
 package kapka.thedrake;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MiddleGameState extends BaseGameState {
 		
@@ -20,10 +16,10 @@ public class MiddleGameState extends BaseGameState {
 				sideOnTurn);
 	}
         
-        /**
-         * Finds all the tiles with the troops of playing side
-         * @return List<Tile>
-         */
+    /**
+     * Finds all the tiles with the troops of playing side
+     * @return List<Tile>
+     */
 	private List<Tile> hasTroop(){
             List<Tile> tileWithTroop = new ArrayList<Tile>();
             for(Tile tile: super.board()){
@@ -32,7 +28,7 @@ public class MiddleGameState extends BaseGameState {
                     tileWithTroop.add(tile);
                 
             }
-            return tileWithTroop;
+            return Collections.unmodifiableList(tileWithTroop);
             
         }
 	@Override
@@ -42,24 +38,33 @@ public class MiddleGameState extends BaseGameState {
 	
 	@Override
 	public List<Move> allMoves() {
-            // Zde doplňte vlastní implementaci
-            List<Move> moves = new ArrayList<Move>();
-            List<BoardChange> changes;
-            for(Tile tile: hasTroop()){
-                changes = tile.troop().changesFrom(tile.position(), super.board());
-                for(BoardChange change: changes){
-                    moves.add(new BoardMove(this, change));
-                }
+        List<Move> moves = new ArrayList<Move>();
+        List<BoardChange> changes = new ArrayList<>();
+        moves.addAll(stackMoves());
+        for(Tile tile: hasTroop()){
+            changes = tile.troop().changesFrom(tile.position(), super.board());
+            for(BoardChange change: changes){
+                moves.add(new BoardMove(this, change));
             }
-            moves.addAll(stackMoves());
-            
-            return moves;
-	}	
-	
+        }
+
+        return Collections.unmodifiableList(moves);
+	}
+	/* Všechny tahy, které může hráč, jenž je zrovna na tahu, provést
+ 	* z políčka na pozici position.
+ 	*/
 	@Override
-	public List<Move> boardMoves(TilePosition position) {		
-		// Zde doplňte vlastní implementaci
-            
+	public List<Move> boardMoves(TilePosition position) {
+	    if(!board().tileAt(position).hasTroop()) return Collections.emptyList();
+		Troop troop = board().tileAt(position).troop();
+		if(troop.side() != sideOnTurn()) return Collections.emptyList();
+		List<Move> res = new ArrayList<>();
+		List<BoardChange> changes = troop.changesFrom(position,board());
+        for(BoardChange change: changes){
+            res.add(new BoardMove(this, change));
+        }
+
+        return Collections.unmodifiableList(res);
 	}
         
 	/* Všechny tahy, které může hráč, jenž je zrovna a tahu, provést
@@ -69,20 +74,11 @@ public class MiddleGameState extends BaseGameState {
 	public List<Move> stackMoves() {
             // Zde doplňte vlastní implementaci
             List<Move> moves = new ArrayList<Move>();
-            /*
-            for(Tile tile: hasTroop()){
-                for(Tile nextTile: super.board()){
-                    if(     !nextTile.hasTroop() && 
-                            nextTile.position().isNextTo(tile.position()))
-                        moves.add(new PlaceFromStack(this, nextTile.position()));
-                }
-            }
-            */
             for(Tile tile: super.board()){
                 if(!tile.hasTroop() && canPlaceFromStack(tile.position()))
                     moves.add(new PlaceFromStack(this, tile.position()));
             }
-            return moves;
+            return Collections.unmodifiableList(moves);
 	}
 	
 	@Override
@@ -92,12 +88,13 @@ public class MiddleGameState extends BaseGameState {
 		
 	public boolean canPlaceFromStack(TilePosition target) {
             // Zde doplňte vlastní implementaci
-            
+
             for(Tile tileWithTroop: hasTroop()){
-                if(target.isNextTo(tileWithTroop.position()))
+                if(target.isNextTo(tileWithTroop.position()) && !board().tileAt(target).hasTroop())
                     return true;
+
             }
-            
+
             return false;
             
 	}

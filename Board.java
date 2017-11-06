@@ -226,22 +226,14 @@ public class Board implements Iterable<Tile> {
             
             @Override
             public Tile next() {
-                //Check  
-                if (this.hasNext()){
-                    Tile tmp = tileAt(new TilePosition(j%(dimension),i));
+                //Check
+                Tile tmp = tileAt(new TilePosition(i++,j));
+                if(i != 0 && i % dimension == 0) {
                     j++;
-                    if( j != 0 && j% (dimension) == 0) {
-                        
-                        i++;
-                        j = 0;
-                        
-                    }
-                    return tmp;
+                    i = 0;
                 }
-                return null;
+                return tmp;
             }
-            
-            
         };
         
     }
