@@ -62,7 +62,7 @@ public class Board implements Iterable<Tile> {
                 }
             }
         }
-        throw new IllegalArgumentException();
+         throw new IllegalArgumentException();
     }
 
     // Ověřuje, že pozice se nachází na hrací desce
@@ -221,17 +221,24 @@ public class Board implements Iterable<Tile> {
             private int j = 0;
             @Override
             public boolean hasNext() {
-                return i < dimension-1 && j < dimension-1;
+                return i < dimension && j < dimension;
             }
-            
             
             @Override
             public Tile next() {
                 //Check  
-                if (!hasNext()) return null;
-                
-                if(j != 0 && j++ % (dimension-1) == 0) i++;
-                    return tileAt(new TilePosition(i,j%(dimension-1)));
+                if (this.hasNext()){
+                    Tile tmp = tileAt(new TilePosition(j%(dimension),i));
+                    j++;
+                    if( j != 0 && j% (dimension) == 0) {
+                        
+                        i++;
+                        j = 0;
+                        
+                    }
+                    return tmp;
+                }
+                return null;
             }
             
             

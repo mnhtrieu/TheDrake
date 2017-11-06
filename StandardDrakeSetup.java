@@ -7,16 +7,16 @@ import java.util.Map;
 
 public class StandardDrakeSetup implements TheDrakeSetup {
 
-    private Map<String, TroopInfo> hMap;
+    private Map<String, TroopInfo> troops;
 
     public StandardDrakeSetup() {
-        hMap = new HashMap<String, TroopInfo>();
-        hMap.put("Drake", DRAKE);
-        hMap.put("Clubman", CLUBMAN);
-        hMap.put("Monk", MONK);
-        hMap.put("Spearman", SPEARMAN);
-        hMap.put("Swordsman", SWORDSMAN);
-        hMap.put("Archer", ARCHER);
+        troops = new HashMap<String, TroopInfo>();
+        troops.put("Drake", DRAKE);
+        troops.put("Clubman", CLUBMAN);
+        troops.put("Monk", MONK);
+        troops.put("Spearman", SPEARMAN);
+        troops.put("Swordsman", SWORDSMAN);
+        troops.put("Archer", ARCHER);
 
     }
 
@@ -100,7 +100,7 @@ public class StandardDrakeSetup implements TheDrakeSetup {
 
     @Override
     public TroopInfo infoByName(String name) {
-        TroopInfo troop = hMap.get(name);
+        TroopInfo troop = troops.get(name);
         if (troop == null) {
             throw new IllegalArgumentException();
         }
