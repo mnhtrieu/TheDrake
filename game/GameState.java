@@ -1,5 +1,7 @@
 package kapka.thedrake.game;
 
+import kapka.thedrake.media.GameStateMedia;
+
 import java.util.List;
 
 public interface GameState {
@@ -19,4 +21,6 @@ public interface GameState {
     public List<Move> boardMoves(TilePosition position);
 
     public List<Move> stackMoves();
+
+    public <T> T putToMedia(GameStateMedia<T> media);
 }
