@@ -1,5 +1,7 @@
 package kapka.thedrake.game;
 
+import kapka.thedrake.media.LeadersMedia;
+
 public class BothLeadersPlaced implements Leaders {
 
     private final TilePosition blueLeaderPosition;
@@ -28,5 +30,10 @@ public class BothLeadersPlaced implements Leaders {
     @Override
     public boolean leaderOn(PlayingSide side, TilePosition position) {
         return position(side).equals(position);
+    }
+
+    @Override
+    public <T> T putToMedia(LeadersMedia<T> media) {
+        return media.putBothLeadersPlaced(this);
     }
 }

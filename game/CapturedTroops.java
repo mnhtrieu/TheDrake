@@ -14,6 +14,11 @@ public class CapturedTroops {
         capturedOrange = new ArrayList<>();
         capturedBlue = new ArrayList<>();
     }
+    
+    public CapturedTroops(List<TroopInfo> blueTroops, List<TroopInfo> orangeTroops){
+        capturedBlue = blueTroops;
+        capturedOrange = orangeTroops;
+    }
 
     // Vrací seznam zajatých jednotek pro daného hráče
     public List<TroopInfo> troops(PlayingSide side) {

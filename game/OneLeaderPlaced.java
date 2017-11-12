@@ -1,5 +1,7 @@
 package kapka.thedrake.game;
 
+import kapka.thedrake.media.LeadersMedia;
+
 public class OneLeaderPlaced implements Leaders {
 
     private final PlayingSide side;
@@ -31,5 +33,10 @@ public class OneLeaderPlaced implements Leaders {
         }
 
         return position(side).equals(position);
+    }
+
+    @Override
+    public <T> T putToMedia(LeadersMedia<T> media) {
+        return media.putOneLeaderPlaced(this);
     }
 }

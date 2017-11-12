@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cudlici.thedrake.media.GameStateMedia;
+import kapka.thedrake.media.GameStateMedia;
 
 public class PlacingLeadersGameState extends BaseGameState {
 	

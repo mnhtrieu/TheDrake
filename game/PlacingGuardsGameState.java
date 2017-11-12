@@ -3,6 +3,7 @@ package kapka.thedrake.game;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import kapka.thedrake.media.GameStateMedia;
 
 public class PlacingGuardsGameState extends BaseGameState {
 
@@ -100,5 +101,10 @@ public class PlacingGuardsGameState extends BaseGameState {
 
     private boolean tryNeighbour(TilePosition origin, int xStep, int yStep) {
         return origin.step(xStep, yStep).equals(leaders().position(sideOnTurn()));
+    }
+
+    @Override
+    public <T> T putToMedia(GameStateMedia<T> media) {
+        return media.putPlacingGuardsGameState(this);
     }
 }

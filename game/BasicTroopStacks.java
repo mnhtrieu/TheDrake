@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import kapka.thedrake.media.TroopStacksMedia;
 
 public class BasicTroopStacks implements TroopStacks {
 
@@ -39,5 +40,10 @@ public class BasicTroopStacks implements TroopStacks {
     public Troop peek(PlayingSide side) {
         TroopInfo info = side == PlayingSide.BLUE ? blueTroops.get(0) : orangeTroops.get(0);
         return new Troop(info, side);
+    }
+
+    @Override
+    public <T> T putToMedia(TroopStacksMedia<T> media) {
+        return media.putBasicTroopStacks(this);
     }
 }

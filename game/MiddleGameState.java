@@ -1,6 +1,7 @@
 package kapka.thedrake.game;
 
 import java.util.*;
+import kapka.thedrake.media.GameStateMedia;
 
 public class MiddleGameState extends BaseGameState {
 		
@@ -104,5 +105,10 @@ public class MiddleGameState extends BaseGameState {
 				leaders(),
 				sideOnTurn().opposite());
 	}
+
+    @Override
+    public <T> T putToMedia(GameStateMedia<T> media) {
+        return media.putMiddleGameState(this);
+    }
 }
 
