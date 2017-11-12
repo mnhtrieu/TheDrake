@@ -11,7 +11,7 @@ import kapka.thedrake.media.PrintMedia;
 
 public class CapturedTroopsPlainTextMedia extends PrintMedia implements CapturedTroopsMedia<Void> {
 
-    CapturedTroopsPlainTextMedia(OutputStream stream) {
+    public CapturedTroopsPlainTextMedia(OutputStream stream) {
 		super(stream);
     }
     @Override
