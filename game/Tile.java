@@ -29,5 +29,4 @@ public abstract class Tile {
     public abstract Troop troop();
 
     public <T> T putToMedia(TileMedia<T> media);
-
 }
