@@ -28,5 +28,5 @@ public abstract class Tile {
     // Jednotka, která na dlaždici zrovna stojí. Pokud tam žádná není, vyhazuje UnsupportedOperationException
     public abstract Troop troop();
 
-    public <T> T putToMedia(TileMedia<T> media);
+    public abstract <T> T putToMedia(TileMedia<T> media);
 }

@@ -17,18 +17,31 @@ public class CapturedTroopsPlainTextMedia extends PrintMedia implements Captured
     @Override
     public Void putCapturedTroops(CapturedTroops captured) {
         PrintWriter w = writer();
-        List<TroopInfo> capturedBlue = captured.troops(PlayingSide.BLUE);
-        List<TroopInfo> capturedOrange = captured.troops(PlayingSide.ORANGE);
         
-        w.printf("Captured %s: %d\n",PlayingSide.BLUE, capturedBlue.size());
-        for (TroopInfo blueTroop: capturedBlue){
-            w.printf("%s\n", blueTroop.name());
+                
+        if(captured.troops(PlayingSide.BLUE) == null){
+            w.printf("Captured %s: %d\n",PlayingSide.BLUE, 0);
+        }
+        else{
+            List<TroopInfo> capturedBlue = captured.troops(PlayingSide.BLUE);
+            w.printf("Captured %s: %d\n",PlayingSide.BLUE, capturedBlue.size());
+            for (TroopInfo blueTroop: capturedBlue)
+                w.printf("%s\n", blueTroop.name());
+            
         }
         
-        w.printf("Captured %s: %d\n",PlayingSide.ORANGE, capturedOrange.size());
-        for (TroopInfo orangeTroop: capturedOrange){
-            w.printf("%s\n", orangeTroop.name());
+        if(captured.troops(PlayingSide.ORANGE) == null)
+            w.printf("Captured %s: %d\n",PlayingSide.ORANGE, 0);
+        
+        else{
+            List<TroopInfo> capturedOrange = captured.troops(PlayingSide.ORANGE);
+            
+            w.printf("Captured %s: %d\n",PlayingSide.ORANGE, capturedOrange.size()); 
+            for (TroopInfo orangeTroop: capturedOrange)
+                w.printf("%s\n", orangeTroop.name());
+                   
         }
+        
         
         
         return null;

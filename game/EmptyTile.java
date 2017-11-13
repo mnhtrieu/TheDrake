@@ -1,5 +1,7 @@
 package kapka.thedrake.game;
 
+import kapka.thedrake.media.TileMedia;
+
 public class EmptyTile extends Tile {
 
     public EmptyTile(TilePosition position) {
@@ -19,6 +21,11 @@ public class EmptyTile extends Tile {
     @Override
     public Troop troop() {
         throw new IllegalArgumentException();
+    }
+
+    @Override
+    public <T> T putToMedia(TileMedia<T> media) {
+        return media.putEmptyTile(this);
     }
 
 }

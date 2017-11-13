@@ -35,7 +35,7 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
         w.println(state.sideOnTurn());
         state.troopStacks().putToMedia(troopStackMedia);
         state.leaders().putToMedia(leaderMedia);
-        
+        state.board().putToMedia(boardMedia);
         //TODO
         return null;
     }
@@ -48,7 +48,7 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
         w.println(state.sideOnTurn());
         state.troopStacks().putToMedia(troopStackMedia);
         state.leaders().putToMedia(leaderMedia);
-        
+        state.board().putToMedia(boardMedia);
         //TODO
         return null;
     }
@@ -61,7 +61,7 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
         w.println(state.sideOnTurn());
         state.troopStacks().putToMedia(troopStackMedia);
         state.leaders().putToMedia(leaderMedia);
-        
+        state.board().putToMedia(boardMedia);
         //TODO
         
         return null;
@@ -75,7 +75,7 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
         w.println(state.sideOnTurn());
         state.troopStacks().putToMedia(troopStackMedia);
         state.leaders().putToMedia(leaderMedia);
-        
+        state.board().putToMedia(boardMedia);
         //TODO
         
         return null;

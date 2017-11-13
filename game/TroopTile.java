@@ -1,5 +1,7 @@
 package kapka.thedrake.game;
 
+import kapka.thedrake.media.TileMedia;
+
 public class TroopTile extends Tile {
 
     private Troop troop;
@@ -22,6 +24,11 @@ public class TroopTile extends Tile {
     @Override
     public Troop troop() {
         return troop;
+    }
+
+    @Override
+    public <T> T putToMedia(TileMedia<T> media) {
+        return media.putTroopTile(this);
     }
 
 }
