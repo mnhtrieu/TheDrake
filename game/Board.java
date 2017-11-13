@@ -1,6 +1,8 @@
 package kapka.thedrake.game;
 
 import java.util.Iterator;
+import kapka.thedrake.media.BoardMedia;
+import kapka.thedrake.media.LeadersMedia;
 
 public class Board implements Iterable<Tile> {
 
@@ -234,6 +236,11 @@ public class Board implements Iterable<Tile> {
             }
         };
         
+    }
+    
+    @Override
+    public <T> T putToMedia(BoardMedia<T> media) {
+        return media.putBoard(this);
     }
 
 }

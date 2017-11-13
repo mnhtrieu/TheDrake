@@ -2,6 +2,7 @@ package kapka.thedrake.media.plaintext;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+
 import kapka.thedrake.game.MiddleGameState;
 import kapka.thedrake.game.PlacingGuardsGameState;
 import kapka.thedrake.game.PlacingLeadersGameState;
@@ -11,16 +12,31 @@ import kapka.thedrake.media.PrintMedia;
 
 
 public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedia<Void>{
-
+    
+    private final TroopStacksPlainTextMedia troopStackMedia;
+    private final LeadersPlainTextMedia leaderMedia;
+    private final BoardPlainTextMedia boardMedia;
+    
+    
     public GameStatePlainTextMedia(OutputStream stream){
         super(stream);
+        this.troopStackMedia = new TroopStacksPlainTextMedia(stream);
+        this.leaderMedia = new LeadersPlainTextMedia(stream);
+        this.boardMedia = new BoardPlainTextMedia(stream);
+        
+        
     }
     
     @Override
     public Void putPlacingLeadersGameState(PlacingLeadersGameState state) {
         PrintWriter w = writer();
         w.println("LEADERS");
+        w.println("0");
+        w.println(state.sideOnTurn());
+        state.troopStacks().putToMedia(troopStackMedia);
+        state.leaders().putToMedia(leaderMedia);
         
+        //TODO
         return null;
     }
 
@@ -28,7 +44,12 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
     public Void putPlacingGuardsGameState(PlacingGuardsGameState state) {
         PrintWriter w = writer();
         w.println("GUARDS");
+        w.println(state.guardsCount());
+        w.println(state.sideOnTurn());
+        state.troopStacks().putToMedia(troopStackMedia);
+        state.leaders().putToMedia(leaderMedia);
         
+        //TODO
         return null;
     }
 
@@ -36,6 +57,12 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
     public Void putMiddleGameState(MiddleGameState state) {
         PrintWriter w = writer();
         w.println("MIDDLE");
+        w.println("4");
+        w.println(state.sideOnTurn());
+        state.troopStacks().putToMedia(troopStackMedia);
+        state.leaders().putToMedia(leaderMedia);
+        
+        //TODO
         
         return null;
     }
@@ -44,6 +71,12 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
     public Void putFinishedGameState(VictoryGameState state) {
         PrintWriter w = writer();
         w.println("VICTORY");
+        w.println("4");
+        w.println(state.sideOnTurn());
+        state.troopStacks().putToMedia(troopStackMedia);
+        state.leaders().putToMedia(leaderMedia);
+        
+        //TODO
         
         return null;
     }
