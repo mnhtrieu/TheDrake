@@ -18,7 +18,7 @@ public class TilePlainTextMedia extends PrintMedia implements TileMedia<Void>{
     public Void putTroopTile(TroopTile tile) {
         PrintWriter w = writer();
         Troop troop = tile.troop();
-        w.printf("%s %s %s\n", troop.info().name(), troop.side(), troop.face());
+        w.printf("%s %s %s", troop.info().name(), troop.side(), troop.face());
         
         return null;
     }
@@ -27,8 +27,8 @@ public class TilePlainTextMedia extends PrintMedia implements TileMedia<Void>{
     public Void putEmptyTile(EmptyTile tile) {
         PrintWriter w = writer();
         
-        w.printf("empty\n");
-        
+        w.print("empty");
+        w.flush();
         
         return null;
     }

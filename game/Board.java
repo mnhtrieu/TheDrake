@@ -14,6 +14,9 @@ public class Board implements Iterable<Tile> {
     public Board(int dimension, CapturedTroops captured, Tile... tiles) {
         this.dimension = dimension;
         this.captured = captured;
+
+
+        this.captured.troops(PlayingSide.BLUE);
         this.tiles = new Tile[dimension][dimension];
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
@@ -40,7 +43,7 @@ public class Board implements Iterable<Tile> {
             this.tiles[t.position().i][t.position().j] = t;
         }
          */
-        this(dimension, null, tiles);
+        this(dimension, new CapturedTroops(), tiles);
     }
 
     // Rozměr hrací desky
@@ -79,7 +82,7 @@ public class Board implements Iterable<Tile> {
 
     // Vytváří novou hrací desku s novými dlaždicemi z pole tiles. Všechny ostatní dlaždice zůstávají stejné
     public Board withTiles(Tile... tiles) {
-        Board tmp = new Board(dimension);
+        Board tmp = new Board(dimension,captured);
         for (int i = 0; i < dimension; i++) {
             tmp.tiles[i] = this.tiles[i].clone();
         }
@@ -98,7 +101,7 @@ public class Board implements Iterable<Tile> {
     public Board withCaptureAndTiles(TroopInfo info, PlayingSide side, Tile... tiles) {
         Board newBoard = this.withTiles(tiles);
         CapturedTroops newCaptured = new CapturedTroops();
-        newBoard.captured = newCaptured.withTroop(side, info);
+        newBoard.captured = captured.withTroop(side, info);
         return newBoard;
     }
 

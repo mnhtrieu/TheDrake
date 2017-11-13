@@ -22,13 +22,13 @@ public class TroopStacksPlainTextMedia extends PrintMedia implements TroopStacks
         List<TroopInfo> blueStack = stacks.troops(PlayingSide.BLUE);
         List<TroopInfo> orangeStack = stacks.troops(PlayingSide.ORANGE);
         
-        w.print("BLUE stack");
+        w.print("BLUE stack:");
         for(TroopInfo blueTroop: blueStack){
             w.printf(" %s",blueTroop.name());
         }
         w.println();
         
-        w.print("ORANGE stack");
+        w.print("ORANGE stack:");
         for(TroopInfo orangeTroop: orangeStack){
             w.printf(" %s", orangeTroop.name());
         }

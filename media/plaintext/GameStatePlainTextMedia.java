@@ -3,10 +3,7 @@ package kapka.thedrake.media.plaintext;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import kapka.thedrake.game.MiddleGameState;
-import kapka.thedrake.game.PlacingGuardsGameState;
-import kapka.thedrake.game.PlacingLeadersGameState;
-import kapka.thedrake.game.VictoryGameState;
+import kapka.thedrake.game.*;
 import kapka.thedrake.media.GameStateMedia;
 import kapka.thedrake.media.PrintMedia;
 
@@ -74,7 +71,12 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
         w.println("4");
         w.println(state.sideOnTurn());
         state.troopStacks().putToMedia(troopStackMedia);
-        state.leaders().putToMedia(leaderMedia);
+        w.print("OL ");
+        if(state.leaders().isPlaced(PlayingSide.BLUE))
+            w.printf("%s X", state.leaders().position(PlayingSide.BLUE).toString());
+        else
+            w.printf("X %s", state.leaders().position(PlayingSide.ORANGE).toString());
+        w.println();
         state.board().putToMedia(boardMedia);
         //TODO
         
