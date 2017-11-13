@@ -71,14 +71,8 @@ public class GameStatePlainTextMedia extends PrintMedia implements GameStateMedi
         w.println("4");
         w.println(state.sideOnTurn());
         state.troopStacks().putToMedia(troopStackMedia);
-        w.print("OL ");
-        if(state.leaders().isPlaced(PlayingSide.BLUE))
-            w.printf("%s X", state.leaders().position(PlayingSide.BLUE).toString());
-        else
-            w.printf("X %s", state.leaders().position(PlayingSide.ORANGE).toString());
-        w.println();
+        state.leaders().putToMedia(leaderMedia);
         state.board().putToMedia(boardMedia);
-        //TODO
         
         return null;
     }

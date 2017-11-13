@@ -30,7 +30,7 @@ public class LeadersPlainTextMedia extends PrintMedia implements LeadersMedia<Vo
         if(leaders.isPlaced(PlayingSide.BLUE))
             w.printf("%s", leaders.position(PlayingSide.BLUE).toString());
         else
-            w.printf("%s", leaders.position(PlayingSide.ORANGE).toString());
+            w.printf("X %s", leaders.position(PlayingSide.ORANGE).toString());
         w.println();
         return null;
     }

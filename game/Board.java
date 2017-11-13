@@ -2,7 +2,6 @@ package kapka.thedrake.game;
 
 import java.util.Iterator;
 import kapka.thedrake.media.BoardMedia;
-import kapka.thedrake.media.LeadersMedia;
 
 public class Board implements Iterable<Tile> {
 
