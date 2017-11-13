@@ -39,7 +39,6 @@ public class CapturedTroops {
 
         tmp.capturedBlue.addAll(this.capturedBlue);
         tmp.capturedOrange.addAll(this.capturedOrange);
-        tmp.troops(PlayingSide.BLUE);
         return tmp;
     }
 }

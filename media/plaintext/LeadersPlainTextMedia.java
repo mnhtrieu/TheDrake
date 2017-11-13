@@ -28,7 +28,7 @@ public class LeadersPlainTextMedia extends PrintMedia implements LeadersMedia<Vo
         PrintWriter w = writer();
         w.print("OL ");
         if(leaders.isPlaced(PlayingSide.BLUE))
-            w.printf("%s", leaders.position(PlayingSide.BLUE).toString());
+            w.printf("%s X", leaders.position(PlayingSide.BLUE).toString());
         else
             w.printf("X %s", leaders.position(PlayingSide.ORANGE).toString());
         w.println();
@@ -38,7 +38,7 @@ public class LeadersPlainTextMedia extends PrintMedia implements LeadersMedia<Vo
     @Override
     public Void putBothLeadersPlaced(BothLeadersPlaced leaders) {
         PrintWriter w = writer();
-        w.printf("BL %s %s%n",
+        w.printf("BL %s %s\n", 
                 leaders.position(PlayingSide.BLUE).toString(), 
                 leaders.position(PlayingSide.ORANGE).toString());
         
